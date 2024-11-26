@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venn Test ThreeJS animation</title>
+    <style>
+        body { margin: 0; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128/examples/js/loaders/GLTFLoader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128/examples/js/loaders/OBJLoader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128/examples/js/controls/OrbitControls.js"></script>
+
+<script>
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    camera.position.z = 5;
+
+    // Adding ambient and directional light
+    const ambientLight = new THREE.AmbientLight(0x404040, 2);
+    scene.add(ambientLight);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    directionalLight.position.set(1, 1, 1).normalize();
+    scene.add(directionalLight);
+
+    // Add OrbitControls
+    const controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;  // optional, for smooth interactions
+    controls.dampingFactor = 0.05;
+    controls.screenSpacePanning = false;
+
+     // Load the OBJ model
+    const loader = new THREE.OBJLoader();
+    loader.load('models/your_model.obj', function(obj) {
+        scene.add(obj);
+        obj.position.set(0, 0, 0);
+        obj.scale.set(1, 1, 1);
+        console.log("Model loaded successfully!");
+    }, undefined, function(error) {
+        console.error('An error happened during loading:', error);
+    });
+
+    // // Load the model (.glb file - deprecated)
+    // const loader = new THREE.GLTFLoader();
+    // loader.load('models/bennu_small.glb', function(gltf) {
+    //     const model = gltf.scene;
+    //     scene.add(model);
+    //     model.position.set(0, 0, 0);
+    //     model.scale.set(1, 1, 1);
+    //     console.log("Model loaded successfully!");
+    // }, undefined, function(error) {
+    //     console.error('An error happened during loading:', error);
+    // });
+
+    function animate() {
+        requestAnimationFrame(animate);
+        controls.update();  // Update controls
+        renderer.render(scene, camera);
+    }
+
+    animate();
+</script>
+
+</body>
+</html>
