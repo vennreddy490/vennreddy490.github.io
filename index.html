@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Venn Test ThreeJS animation</title>
+    <title>Sample Asteroid Rendering ThreeJS</title>
     <style>
         body { margin: 0; }
         canvas { display: block; }
@@ -39,18 +39,7 @@
     controls.dampingFactor = 0.05;
     controls.screenSpacePanning = false;
 
-    //  // Load the OBJ model (deprecated for this implementation)
-    // const loader = new THREE.OBJLoader();
-    // loader.load('models/your_model.obj', function(obj) {
-    //     scene.add(obj);
-    //     obj.position.set(0, 0, 0);
-    //     obj.scale.set(1, 1, 1);
-    //     console.log("Model loaded successfully!");
-    // }, undefined, function(error) {
-    //     console.error('An error happened during loading:', error);
-    // });
-
-    // Load the model (.glb file - deprecated)
+    // Load the model (.glb file)
     const loader = new THREE.GLTFLoader();
     loader.load('models/bennu_small.glb', function(gltf) {
         const model = gltf.scene;
